@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_PATTERN">
+			%d{yyyy-MM-dd HH:mm:ss}{GMT+0} %5p ${hostName}---[%15.15t] %c : %m %X{msg} %n
+		</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT"
+			follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		
+		<JDBC name="AuditDatabaseAppender" tableName="audit_data">
+
+			<!-- Now it deny warn, error and fatal messages. Stores only info logs 
+				to Audit table -->
+			<ThresholdFilter level="warn" onMatch="DENY"
+				onMismatch="NEUTRAL" />
+
+			<ConnectionFactory
+				class="com.ta.config.MysqlLogDBConfig"
+				method="getDatabaseConnection" />
+
+			<Column name="user_id" pattern="%replace{%X{UserID}}{^$}{0}" />
+			<Column name="login_id" pattern="%replace{%X{LoginId}}{^$}{0}" />
+			<Column name="role_id"
+				pattern="%replace{%X{RoleId}}{^$|^null}{0}" />
+			<Column name="tag_id" pattern="%X{TagType}" />
+			<Column name="audit_timestamp"
+				pattern="%d{yyyy-MM-dd HH:mm:ss}{GMT+0}" />
+			<Column name="operation" pattern="%X{Ope}" />
+			<Column name="application_screen"
+				pattern="%X{ApplicationScreen}" />
+			<Column name="application" pattern="%X{Application}" />
+			<Column name="host" pattern="%X{host}" />
+			<Column name="message"
+				pattern="%replace{%X{msg}}{^$|^.*@.*\..*$}{Application Starting}" />
+			<Column name="component_name" pattern="%X{className}" />
+			<Column name="table_name" pattern="" />
+			<Column name="stacktrace" pattern="" />
+			<Column name="created_by"
+				pattern="%replace{%X{LoginId}}{^$}{0}" />
+			<Column name="created_at"
+				pattern="%d{yyyy-MM-dd HH:mm:ss}{GMT+0}" />
+			<Column name="additional_info" pattern="%X{AdditionalInfo}" />
+			<Column name="url" pattern="%X{RequestUrl}" />
+			<Column name="input_json" pattern="%X{InputJson}" />
+			<Column name="http_method" pattern="%X{HttpMethod}" />
+		</JDBC>
+		
+		<JDBC name="ErrorDatabaseAppender" tableName="application_error">
+			<ConnectionFactory
+				class="com.ta.config.MysqlLogDBConfig"
+				method="getDatabaseConnection" />
+			<Column name="user_id" pattern="%replace{%X{UserID}}{^$}{0}" />
+			<Column name="login_id" pattern="%replace{%X{LoginId}}{^$}{0}" />
+			<Column name="tag_id" pattern="%X{TagId}" />
+			<Column name="error_timestamp"
+				pattern="%d{yyyy-MM-dd HH:mm:ss}{GMT+0}" />
+			<Column name="operation" pattern="%X{Operation}" />
+			<Column name="application_screen"
+				pattern="%X{ApplicationScreen}" />
+			<Column name="application" pattern="%X{Application}" />
+			<Column name="host" pattern="%X{host}" />
+			<Column name="component_name" pattern="%X{className}" />
+			<Column name="error_type" pattern="%X{ErrType}" />
+			<Column name="error_severity" pattern="%p" />
+			<Column name="error_code"
+				pattern="%replace{%X{ErrCode}}{^$|^null}{0}" />
+			<Column name="line_num"
+				pattern="%replace{%X{lineNumber}}{^$|^null}{0}" />
+			<Column name="error_message" pattern="%m" />
+			<Column name="stacktrace" pattern="%throwable{full}" />
+			<Column name="created_by"
+				pattern="%replace{%X{LoginId}}{^$}{0}" />
+			<Column name="created_at"
+				pattern="%d{yyyy-MM-dd HH:mm:ss}{GMT+0}" />
+			<Column name="additional_info" pattern="%X{AdditionalInfo}" />
+			<Column name="url" pattern="%X{RequestUrl}" />
+		</JDBC>
+	</Appenders>
+
+	<Loggers>
+		<AsyncLogger name="com.ta" level="info" additivity="false"
+			includeLocation="true">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="ErrorDatabaseAppender" level="ERROR" />
+			<AppenderRef ref="AuditDatabaseAppender" level="info" />
+		</AsyncLogger>
+
+		<Root level="info" includeLocation="true">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="ErrorDatabaseAppender" level="error" />
+			<AppenderRef ref="AuditDatabaseAppender" level="off" />
+		</Root>
+		<!-- Third party Logs -->
+		<Logger name="org.hibernate" level="ERROR" additivity="false">
+			<AppenderRef ref="ConsoleAppender" level="ERROR" />
+			<!-- <AppenderRef ref="ErrorDatabaseAppender" level="ERROR" /> -->
+			<AppenderRef ref="AuditDatabaseAppender" level="off" />
+		</Logger>
+
+		<logger name="org.springframework" level="ERROR"
+			additivity="false">
+			<AppenderRef ref="ConsoleAppender" />
+			<!-- <AppenderRef ref="ErrorDatabaseAppender" level="ERROR" /> -->
+			<AppenderRef ref="AuditDatabaseAppender" level="off" />
+		</logger>
+
+		<logger name="springfox.documentation.spring.web"
+			additivity="false">
+			<AppenderRef ref="ConsoleAppender" level="info" />
+			<AppenderRef ref="AuditDatabaseAppender" level="off" />
+			<!-- <AppenderRef ref="ErrorDatabaseAppender" level="ERROR" /> -->
+		</logger>
+
+		<logger name="org.apache" additivity="false">
+			<AppenderRef ref="ConsoleAppender" level="info" />
+			<AppenderRef ref="AuditDatabaseAppender" level="off" />
+			<!-- <AppenderRef ref="ErrorDatabaseAppender" level="ERROR" /> -->
+		</logger>
+	</Loggers>
+</Configuration>
