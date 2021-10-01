@@ -8,7 +8,8 @@ import lombok.Data;
 public class BookingModel {
 
 	private Long id;
-	private String orderby;
+	private String bookedby;
+	private String bookingno;
 	private String driverName;
 	private Date reportDate;
 	private String customerName;

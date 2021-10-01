@@ -25,8 +25,11 @@ public class Booking extends UserDateAudit {
 	@Version
 	private int version;
 
+	@Column(length = 30)
+	private String bookingno;
+	
 	@Column(length = 150)
-	private String orderby;
+	private String bookedby;
 
 	@Column(length = 150)
 	private String driverName;
