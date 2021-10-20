@@ -71,12 +71,13 @@ public class AuthenticationController {
 			} else {
 				rm.setMessage("Login Failed Try again.");
 				rm.setStatusCode(1);
-				rm.setResults(dto);
 			}
+			rm.setResults(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.SELECT).errorMessage(e.getMessage())
+			/*LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.SELECT).errorMessage(e.getMessage())
 					.exception(e).build());
+		*/
 		}
 
 		return new ResponseEntity<>(rm, HttpStatus.OK);
@@ -104,10 +105,10 @@ public class AuthenticationController {
 			}
 
 		} catch (Exception e) {
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.CREATE).errorMessage(e.getMessage())
+			/*LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.CREATE).errorMessage(e.getMessage())
 					.exception(e).build());
-		}
-
+		
+*/}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
@@ -121,9 +122,9 @@ public class AuthenticationController {
 			rm.setStatusCode(1);
 			rm.setResults(null);
 		} catch (Exception e) {
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.CREATE).errorMessage(e.getMessage())
+			/*LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.CREATE).errorMessage(e.getMessage())
 					.exception(e).build());
-		}
+		*/}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 }

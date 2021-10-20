@@ -16,6 +16,7 @@
 package com.ta.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -57,6 +58,10 @@ public class DriverDao {
 	public List<Driver> getAllDrivers()
 	{
 		return driverRepository.findAll();
+	}
+
+	public Optional<Driver> getDriverDetail(Long id) {
+		return driverRepository.findById(id.toString());
 	}
 	
 	

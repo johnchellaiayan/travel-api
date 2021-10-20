@@ -45,8 +45,10 @@ public class BookingController {
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.DELETE).errorMessage(e.getMessage())
-					.exception(e).build());
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
 			throw e;
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
@@ -70,8 +72,10 @@ public class BookingController {
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.DELETE).errorMessage(e.getMessage())
-					.exception(e).build());
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
 			throw e;
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
@@ -93,8 +97,10 @@ public class BookingController {
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.DELETE).errorMessage(e.getMessage())
-					.exception(e).build());
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
 			throw e;
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);

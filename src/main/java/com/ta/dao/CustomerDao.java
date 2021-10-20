@@ -15,9 +15,13 @@
  ******************************************************************************/
 package com.ta.dao;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.hibernate.Session;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,7 +31,6 @@ import com.ta.entity.model.CustomerModel;
 import com.ta.repository.CustomerRepository;
 
 @Repository
-@Transactional
 public class CustomerDao {
 
 	@Autowired
@@ -43,6 +46,22 @@ public class CustomerDao {
 		Customer customer = modelMapper.map(customerModel, Customer.class);		
 		customerRepository.save(customer);
 		return customer;
+	}
+	@Transactional
+	public Customer updateCustomer(CustomerModel customerModel, Long id) {
+		customerModel.setId(id.toString());
+		Customer customer = modelMapper.map(customerModel, Customer.class);		
+		Session session = em.unwrap(Session.class);
+		session.saveOrUpdate(customer);
+		return customer;
+	}
+
+	public List<Customer> getAllCustomers() {
+		return customerRepository.findAll();
+	}
+
+	public Optional<Customer> getCustomerDetail(Long id) {
+		return customerRepository.findById(id.toString());
 	}
 
 }

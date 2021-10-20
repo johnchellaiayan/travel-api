@@ -49,4 +49,148 @@ public class ErrorLogDto {
 	@JsonIgnore
 	private String requestUrl;
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Long getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(Long loginId) {
+		this.loginId = loginId;
+	}
+
+	public String getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
+	}
+
+	public Date getErrorTimeStamp() {
+		return errorTimeStamp;
+	}
+
+	public void setErrorTimeStamp(Date errorTimeStamp) {
+		this.errorTimeStamp = errorTimeStamp;
+	}
+
+	public LogOperation getOperation() {
+		return operation;
+	}
+
+	public void setOperation(LogOperation operation) {
+		this.operation = operation;
+	}
+
+	public String getApplicationScreen() {
+		return applicationScreen;
+	}
+
+	public void setApplicationScreen(String applicationScreen) {
+		this.applicationScreen = applicationScreen;
+	}
+
+	public String getComponentName() {
+		return componentName;
+	}
+
+	public void setComponentName(String componentName) {
+		this.componentName = componentName;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
+	public String getErrorSeverity() {
+		return errorSeverity;
+	}
+
+	public void setErrorSeverity(String errorSeverity) {
+		this.errorSeverity = errorSeverity;
+	}
+
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	public Integer getLineNumber() {
+		return lineNumber;
+	}
+
+	public void setLineNumber(Integer lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public String getStacktrace() {
+		return stacktrace;
+	}
+
+	public void setStacktrace(String stacktrace) {
+		this.stacktrace = stacktrace;
+	}
+
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public String getAdditionalInfo() {
+		return additionalInfo;
+	}
+
+	public void setAdditionalInfo(String additionalInfo) {
+		this.additionalInfo = additionalInfo;
+	}
+
+	public Exception getException() {
+		return exception;
+	}
+
+	public void setException(Exception exception) {
+		this.exception = exception;
+	}
+
+	public String getRequestUrl() {
+		return requestUrl;
+	}
+
+	public void setRequestUrl(String requestUrl) {
+		this.requestUrl = requestUrl;
+	}
+
 }

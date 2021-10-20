@@ -28,6 +28,31 @@ public class ResetPasswordDto {
 	private String newPassword;
 	
 	@NotNull(message = "otp is required")
-	private String code;	
+	private String code;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}	
+	
 
 }

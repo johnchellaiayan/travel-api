@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ta.dao.DriverDao;
-import com.ta.dto.ErrorLogDto;
 import com.ta.dto.ResponseMessage;
 import com.ta.entity.Driver;
 import com.ta.entity.model.DriverModel;
-import com.ta.enumeration.LogOperation;
-import com.ta.util.LogWrapper;
 
 @RestController
 @RequestMapping("api/driver/")
@@ -45,8 +42,10 @@ public class DriverController {
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.DELETE).errorMessage(e.getMessage())
-					.exception(e).build());
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
 			throw e;
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
@@ -70,8 +69,10 @@ public class DriverController {
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.DELETE).errorMessage(e.getMessage())
-					.exception(e).build());
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
 			throw e;
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
@@ -93,11 +94,36 @@ public class DriverController {
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
-			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.DELETE).errorMessage(e.getMessage())
-					.exception(e).build());
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
 			throw e;
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+	@GetMapping("drivers/{id}")
+	public ResponseEntity<ResponseMessage<Driver>> getDriverDetail(@PathVariable Long id) {
+		ResponseMessage<Driver> rm = new ResponseMessage<>();
 
+		try {
+			Driver driver = driverDao.getDriverDetail(id).get();
+			if (driver != null) {
+				rm.setMessage("Driver details are available");
+				rm.setResults(driver);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Driver details are not available.");
+				rm.setResults(driver);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 }
