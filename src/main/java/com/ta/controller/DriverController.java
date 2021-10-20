@@ -107,7 +107,7 @@ public class DriverController {
 		ResponseMessage<Driver> rm = new ResponseMessage<>();
 
 		try {
-			Driver driver = driverDao.getDriverDetail(id).get();
+			Driver driver = driverDao.getDriverDetail(id).get(0);
 			if (driver != null) {
 				rm.setMessage("Driver details are available");
 				rm.setResults(driver);

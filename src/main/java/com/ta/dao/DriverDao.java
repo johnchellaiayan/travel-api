@@ -21,10 +21,14 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ta.entity.Customer;
 import com.ta.entity.Driver;
 import com.ta.entity.model.DriverModel;
 import com.ta.repository.DriverRepository;
@@ -60,10 +64,16 @@ public class DriverDao {
 		return driverRepository.findAll();
 	}
 
-	public Optional<Driver> getDriverDetail(Long id) {
-		return driverRepository.findById(id.toString());
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Driver> getDriverDetail(Long id) {
+		Session session = em.unwrap(Session.class);
+		Criteria cr = session.createCriteria(Driver.class);
+		cr.add(Restrictions.eq("id", id));
+		List<Driver> list = (List<Driver>) cr.list();
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
 	}
-	
-	
 
 }

@@ -108,7 +108,7 @@ public class CustomerController {
 		ResponseMessage<Customer> rm = new ResponseMessage<>();
 
 		try {
-			Customer customers = customerDao.getCustomerDetail(id).get();
+			Customer customers = customerDao.getCustomerDetail(id).get(0);
 			if (customers != null) {
 				rm.setMessage("Customer details are available");
 				rm.setResults(customers);

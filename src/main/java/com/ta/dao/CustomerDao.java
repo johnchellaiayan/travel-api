@@ -16,12 +16,13 @@
 package com.ta.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,8 +61,15 @@ public class CustomerDao {
 		return customerRepository.findAll();
 	}
 
-	public Optional<Customer> getCustomerDetail(Long id) {
-		return customerRepository.findById(id.toString());
-	}
-
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public List<Customer> getCustomerDetail(Long id) {
+			Session session = em.unwrap(Session.class);
+			Criteria cr = session.createCriteria(Customer.class);
+			cr.add(Restrictions.eq("id", id));
+			List<Customer> list = (List<Customer>) cr.list();
+			if (list != null && list.size() > 0) {
+				return list;
+			}
+			return null;
+		}
 }
