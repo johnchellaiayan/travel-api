@@ -57,6 +57,7 @@ public class CustomerController {
 		ResponseMessage<Customer> rm = new ResponseMessage<>();
 
 		try {
+			System.out.println("CustomerId="+id);
 			Customer customer = customerDao.updateCustomer(customerModel,id);
 			if (customer != null) {
 				rm.setMessage("Customer Information saved successfully");

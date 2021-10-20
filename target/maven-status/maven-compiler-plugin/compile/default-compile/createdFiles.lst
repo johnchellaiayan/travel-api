@@ -5,6 +5,7 @@ com\ta\repository\DriverRepository.class
 com\ta\exception\AppException.class
 com\ta\config\MysqlLogDBConfig$1.class
 com\ta\config\TimeZoneConfig.class
+com\ta\dao\BookingDao.class
 com\ta\dao\CustomerDao.class
 com\ta\entity\Driver.class
 com\ta\util\PhysicalNamingStrategyImpl.class
@@ -36,6 +37,7 @@ com\ta\dto\ApiKeyDto.class
 com\ta\dto\TokenDto.class
 com\ta\util\AES.class
 com\ta\dto\AuditLogDto.class
+com\ta\repository\BookingRepository.class
 com\ta\dto\BasicLookupDto.class
 com\ta\repository\CustomerRepository.class
 com\ta\entity\lookup\Lookup.class
@@ -46,6 +48,7 @@ com\ta\dto\RefreshTokenDto.class
 com\ta\filter\HeaderRequestInterceptor.class
 com\ta\config\SpringSecurityAuditAwareImpl.class
 com\ta\entity\ResourceRoleMap.class
+com\ta\controller\BookingController.class
 com\ta\exception\UnHandledException.class
 com\ta\enumeration\LogOperation.class
 com\ta\util\ServletRequestWrapper.class
@@ -54,6 +57,7 @@ com\ta\entity\User.class
 com\ta\firebase\FirebaseUtil.class
 com\ta\util\Constants$BooleanValue.class
 com\ta\exception\ApiError.class
+com\ta\entity\Booking.class
 com\ta\entity\Customer.class
 com\ta\entity\lookup\ResourceType.class
 com\ta\entity\Role.class
@@ -76,6 +80,7 @@ com\ta\firebase\HeaderRequestInterceptor.class
 com\ta\exception\BadRequestException.class
 com\ta\controller\UserController.class
 com\ta\config\AuditingConfig.class
+com\ta\entity\model\BookingModel.class
 com\ta\controller\CustomerController.class
 com\ta\config\WebMvcConfig.class
 com\ta\util\BeanUtility.class

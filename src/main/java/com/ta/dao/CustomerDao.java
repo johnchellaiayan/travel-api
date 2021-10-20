@@ -52,7 +52,7 @@ public class CustomerDao {
 		customerModel.setId(id.toString());
 		Customer customer = modelMapper.map(customerModel, Customer.class);		
 		Session session = em.unwrap(Session.class);
-		session.saveOrUpdate(customer);
+		session.update(customer);
 		return customer;
 	}
 
