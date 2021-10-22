@@ -126,4 +126,26 @@ public class DriverController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+	
+	@GetMapping("search/{id}/{value}")
+	public ResponseEntity<ResponseMessage<List<Driver>>> searchDriverDetail(@PathVariable String field, 
+			@PathVariable String value) {
+		ResponseMessage<List<Driver>> rm = new ResponseMessage<>();
+
+		try {
+			List<Driver> drivers = driverDao.searchDriverInfo(field, value);
+			if (drivers != null) {
+				rm.setMessage("Drivers are available");
+				rm.setResults(drivers);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Drivers are not available.");
+				rm.setResults(drivers);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 }

@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ta.dao.BookingDao;
-import com.ta.dto.ErrorLogDto;
 import com.ta.dto.ResponseMessage;
 import com.ta.entity.Booking;
 import com.ta.entity.model.BookingModel;
-import com.ta.enumeration.LogOperation;
-import com.ta.util.LogWrapper;
 
 @RestController
 @RequestMapping("api/booking/")
@@ -106,4 +103,25 @@ public class BookingController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
+	@GetMapping("search/{id}/{value}")
+	public ResponseEntity<ResponseMessage<List<Booking>>> searchBookingDetail(@PathVariable String field, 
+			@PathVariable String value) {
+		ResponseMessage<List<Booking>> rm = new ResponseMessage<>();
+
+		try {
+			List<Booking> bookings = bookingDao.searchBookingInfo(field, value);
+			if (bookings != null) {
+				rm.setMessage("Bookings are available");
+				rm.setResults(bookings);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Bookings are not available.");
+				rm.setResults(bookings);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 }

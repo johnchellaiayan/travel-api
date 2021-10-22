@@ -20,13 +20,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ta.entity.Booking;
-import com.ta.entity.Booking;
-import com.ta.entity.model.BookingModel;
 import com.ta.entity.model.BookingModel;
 import com.ta.repository.BookingRepository;
 
@@ -58,6 +60,18 @@ public class BookingDao {
 
 	public List<Booking> getAllBookings() {
 		return bookingRepository.findAll();
+	}
+	
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Booking> searchBookingInfo(String inFindField, String inFindValue) {
+		Session session = em.unwrap(Session.class);
+		Criteria cr = session.createCriteria(Booking.class);
+		cr.add(Restrictions.ilike(inFindField, "%" + inFindValue + "%", MatchMode.ANYWHERE));
+		List<Booking> list = (List<Booking>) cr.list();
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
 	}
 
 }

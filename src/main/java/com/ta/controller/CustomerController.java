@@ -18,7 +18,8 @@ import com.ta.dao.CustomerDao;
 import com.ta.dto.ResponseMessage;
 import com.ta.entity.Customer;
 import com.ta.entity.model.CustomerModel;
-@CrossOrigin(origins = "*") //this line
+
+@CrossOrigin(origins = "*") // this line
 @RestController
 @RequestMapping("api/customer/")
 public class CustomerController {
@@ -50,6 +51,7 @@ public class CustomerController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+
 	@CrossOrigin
 	@PutMapping("customers/{id}")
 	public ResponseEntity<ResponseMessage<Customer>> updateUser(@RequestBody CustomerModel customerModel,
@@ -57,8 +59,8 @@ public class CustomerController {
 		ResponseMessage<Customer> rm = new ResponseMessage<>();
 
 		try {
-			System.out.println("CustomerId="+id);
-			Customer customer = customerDao.updateCustomer(customerModel,id);
+			System.out.println("CustomerId=" + id);
+			Customer customer = customerDao.updateCustomer(customerModel, id);
 			if (customer != null) {
 				rm.setMessage("Customer Information saved successfully");
 				rm.setResults(customer);
@@ -77,7 +79,7 @@ public class CustomerController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("customers")
 	public ResponseEntity<ResponseMessage<List<Customer>>> getCustomers() {
 		ResponseMessage<List<Customer>> rm = new ResponseMessage<>();
@@ -102,7 +104,7 @@ public class CustomerController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("customers/{id}")
 	public ResponseEntity<ResponseMessage<Customer>> getCustomerDetail(@PathVariable Long id) {
 		ResponseMessage<Customer> rm = new ResponseMessage<>();
@@ -123,6 +125,28 @@ public class CustomerController {
 			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
 			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
 			 */
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
+
+	@GetMapping("search/{id}/{value}")
+	public ResponseEntity<ResponseMessage<List<Customer>>> searchCustomerDetail(@PathVariable String field,
+			@PathVariable String value) {
+		ResponseMessage<List<Customer>> rm = new ResponseMessage<>();
+
+		try {
+			List<Customer> customers = customerDao.searchCustomerInfo(field, value);
+			if (customers != null) {
+				rm.setMessage("Customers are available");
+				rm.setResults(customers);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Customers are not available.");
+				rm.setResults(customers);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
 			throw e;
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
