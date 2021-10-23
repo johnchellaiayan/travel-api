@@ -81,6 +81,7 @@ public class CustomerDao {
 		Session session = em.unwrap(Session.class);
 		Criteria cr = session.createCriteria(Customer.class);
 		cr.add(Restrictions.ilike(inFindField, "%" + inFindValue + "%", MatchMode.ANYWHERE));
+		/// or condition
 		List<Customer> list = (List<Customer>) cr.list();
 		if (list != null && list.size() > 0) {
 			return list;

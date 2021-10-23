@@ -127,7 +127,7 @@ public class DriverController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 	
-	@GetMapping("search/{id}/{value}")
+	@GetMapping("search/{field}/{value}")
 	public ResponseEntity<ResponseMessage<List<Driver>>> searchDriverDetail(@PathVariable String field, 
 			@PathVariable String value) {
 		ResponseMessage<List<Driver>> rm = new ResponseMessage<>();
