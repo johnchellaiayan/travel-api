@@ -130,7 +130,7 @@ public class CustomerController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
-	@GetMapping("search/{id}/{value}")
+	@GetMapping("search/{field}/{value}")
 	public ResponseEntity<ResponseMessage<List<Customer>>> searchCustomerDetail(@PathVariable String field,
 			@PathVariable String value) {
 		ResponseMessage<List<Customer>> rm = new ResponseMessage<>();

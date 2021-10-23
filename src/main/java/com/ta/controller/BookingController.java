@@ -103,7 +103,7 @@ public class BookingController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
-	@GetMapping("search/{id}/{value}")
+	@GetMapping("search/{field}/{value}")
 	public ResponseEntity<ResponseMessage<List<Booking>>> searchBookingDetail(@PathVariable String field, 
 			@PathVariable String value) {
 		ResponseMessage<List<Booking>> rm = new ResponseMessage<>();
