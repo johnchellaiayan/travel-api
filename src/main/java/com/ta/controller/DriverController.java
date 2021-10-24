@@ -148,4 +148,25 @@ public class DriverController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+	
+	@GetMapping("activedrivers")
+	public ResponseEntity<ResponseMessage<List<Driver>>> getActiveDrivers() {
+		ResponseMessage<List<Driver>> rm = new ResponseMessage<>();
+
+		try {
+			List<Driver> drivers = driverDao.getActiveDrivers();
+			if (drivers != null) {
+				rm.setMessage("Active Drivers are available");
+				rm.setResults(drivers);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Active Drivers are not available.");
+				rm.setResults(drivers);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 }

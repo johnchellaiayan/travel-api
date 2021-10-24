@@ -85,5 +85,17 @@ public class DriverDao {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Driver> getActiveDrivers() {
+		Session session = em.unwrap(Session.class);
+		Criteria cr = session.createCriteria(Driver.class);
+		cr.add(Restrictions.eqOrIsNull("isResigned", "false"));
+		List<Driver> list = (List<Driver>) cr.list();
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
+	}
 
 }
