@@ -34,7 +34,8 @@ public class Booking extends UserDateAudit {
 	@Column(length = 150)
 	private String driverName;
 
-	private Date reportDate;
+	@Column(length = 150)
+	private String reportDate;
 
 	@Column(length = 150)
 	private String customerName;

@@ -63,6 +63,18 @@ public class BookingDao {
 	}
 	
 	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Booking> getDatebasedBookings(String inFindValue) {
+		Session session = em.unwrap(Session.class);
+		Criteria cr = session.createCriteria(Booking.class);
+		cr.add(Restrictions.ilike("reportDate", inFindValue + "%", MatchMode.START));
+		List<Booking> list = (List<Booking>) cr.list();
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
+	}
+	
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Booking> searchBookingInfo(String inFindField, String inFindValue) {
 		Session session = em.unwrap(Session.class);
 		Criteria cr = session.createCriteria(Booking.class);

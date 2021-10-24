@@ -11,7 +11,7 @@ public class BookingModel {
 	private String bookedby;
 	private String bookingno;
 	private String driverName;
-	private Date reportDate;
+	private String reportDate;
 	private String customerName;
 	private String pickupArea;
 	private String dropArea;

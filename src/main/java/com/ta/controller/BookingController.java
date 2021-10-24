@@ -102,6 +102,31 @@ public class BookingController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+	
+	@GetMapping("bookings/{datefield}")
+	public ResponseEntity<ResponseMessage<List<Booking>>> getBookings(@PathVariable String datefield) {
+		ResponseMessage<List<Booking>> rm = new ResponseMessage<>();
+
+		try {
+			List<Booking> bookings = bookingDao.getDatebasedBookings(datefield);
+			if (bookings != null) {
+				rm.setMessage("Bookings are available");
+				rm.setResults(bookings);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Bookings are not available.");
+				rm.setResults(bookings);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 
 	@GetMapping("search/{field}/{value}")
 	public ResponseEntity<ResponseMessage<List<Booking>>> searchBookingDetail(@PathVariable String field, 
