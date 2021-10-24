@@ -24,4 +24,5 @@ public class BookingModel {
 	private String complaints;	
 	private String smsTo;
 	private String customerRequest;
+	private String bookStatus;
 }
