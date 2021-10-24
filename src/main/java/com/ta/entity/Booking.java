@@ -71,5 +71,8 @@ public class Booking extends UserDateAudit {
 
 	@Column(columnDefinition = "TEXT")
 	private String customerRequest;
+	
+	@Column(length = 30)
+	private String bookStatus;
 
 }
