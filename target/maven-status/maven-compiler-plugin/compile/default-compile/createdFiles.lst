@@ -27,6 +27,7 @@ com\ta\entity\model\DriverModel.class
 com\ta\controller\DriverController.class
 com\ta\exception\ApiSubError.class
 com\ta\filter\AuthenticationFilter.class
+com\ta\controller\CommonController.class
 com\ta\util\LogWrapper.class
 com\ta\controller\TestController.class
 com\ta\dto\ErrorLogDto$ErrorLogDtoBuilder.class
@@ -38,6 +39,7 @@ com\ta\dto\TokenDto.class
 com\ta\util\AES.class
 com\ta\dto\AuditLogDto.class
 com\ta\repository\BookingRepository.class
+com\ta\dto\StatisticsDto.class
 com\ta\dto\BasicLookupDto.class
 com\ta\repository\CustomerRepository.class
 com\ta\entity\lookup\Lookup.class
@@ -53,6 +55,7 @@ com\ta\exception\UnHandledException.class
 com\ta\enumeration\LogOperation.class
 com\ta\util\ServletRequestWrapper.class
 com\ta\dto\ResetPasswordDto.class
+com\ta\dao\CommonDAO.class
 com\ta\entity\User.class
 com\ta\firebase\FirebaseUtil.class
 com\ta\util\Constants$BooleanValue.class

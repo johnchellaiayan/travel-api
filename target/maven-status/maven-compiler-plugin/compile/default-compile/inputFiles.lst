@@ -8,6 +8,7 @@ D:\TA_API\travel-api\src\main\java\com\ta\dto\ApiKeyDto.java
 D:\TA_API\travel-api\src\main\java\com\ta\entity\Driver.java
 D:\TA_API\travel-api\src\main\java\com\ta\entity\lookup\ResourceType.java
 D:\TA_API\travel-api\src\main\java\com\ta\service\UserPrincipal.java
+D:\TA_API\travel-api\src\main\java\com\ta\dao\CommonDAO.java
 D:\TA_API\travel-api\src\main\java\com\ta\util\BeanUtility.java
 D:\TA_API\travel-api\src\main\java\com\ta\repository\ErrorLogRepository.java
 D:\TA_API\travel-api\src\main\java\com\ta\entity\ApplicationError.java
@@ -22,13 +23,13 @@ D:\TA_API\travel-api\src\main\java\com\ta\controller\UserController.java
 D:\TA_API\travel-api\src\main\java\com\ta\entity\model\CustomerModel.java
 D:\TA_API\travel-api\src\main\java\com\ta\config\BeanConfig.java
 D:\TA_API\travel-api\src\main\java\com\ta\TravelAgencyApp.java
+D:\TA_API\travel-api\src\main\java\com\ta\dto\StatisticsDto.java
 D:\TA_API\travel-api\src\main\java\com\ta\util\LogWrapper.java
 D:\TA_API\travel-api\src\main\java\com\ta\filter\AuthenticationFilter.java
 D:\TA_API\travel-api\src\main\java\com\ta\dto\RefreshTokenDto.java
 D:\TA_API\travel-api\src\main\java\com\ta\entity\lookup\Lookup.java
 D:\TA_API\travel-api\src\main\java\com\ta\controller\AuthenticationController.java
 D:\TA_API\travel-api\src\main\java\com\ta\util\PhysicalNamingStrategyImpl.java
-D:\TA_API\travel-api\src\main\java\com\ta\config\ClickHouseDBConfig.java
 D:\TA_API\travel-api\src\main\java\com\ta\enumeration\LogOperation.java
 D:\TA_API\travel-api\src\main\java\com\ta\repository\BookingRepository.java
 D:\TA_API\travel-api\src\main\java\com\ta\service\StringPrefixedSequenceIdGenerator.java
@@ -49,6 +50,7 @@ D:\TA_API\travel-api\src\main\java\com\ta\exception\ControllerErrorHandler.java
 D:\TA_API\travel-api\src\main\java\com\ta\entity\audit\UserDateAudit.java
 D:\TA_API\travel-api\src\main\java\com\ta\entity\model\UserModel.java
 D:\TA_API\travel-api\src\main\java\com\ta\dto\ResponseMessage.java
+D:\TA_API\travel-api\src\main\java\com\ta\controller\CommonController.java
 D:\TA_API\travel-api\src\main\java\com\ta\dto\BasicModel.java
 D:\TA_API\travel-api\src\main\java\com\ta\controller\CustomerController.java
 D:\TA_API\travel-api\src\main\java\com\ta\firebase\HeaderRequestInterceptor.java
