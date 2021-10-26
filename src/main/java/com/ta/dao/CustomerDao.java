@@ -63,7 +63,7 @@ public class CustomerDao {
 	public List<Customer> getAllCustomers() {
 		return customerRepository.findAll();
 	}
-
+	@Transactional
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public List<Customer> getCustomerDetail(Long id) {
 		Session session = em.unwrap(Session.class);
@@ -75,7 +75,7 @@ public class CustomerDao {
 		}
 		return null;
 	}
-
+	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Customer> searchCustomerInfo(String inFindField, String inFindValue) {
 		Session session = em.unwrap(Session.class);

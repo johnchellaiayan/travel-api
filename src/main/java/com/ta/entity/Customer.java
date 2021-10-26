@@ -24,9 +24,11 @@ public class Customer extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@JsonIgnore
-	@Version
-	private int version;
+	/*
+	 * @JsonIgnore
+	 * 
+	 * @Version private int version;
+	 */
 
 	@Column(columnDefinition = "TEXT")
 	private String name;

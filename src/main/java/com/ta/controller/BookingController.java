@@ -77,6 +77,30 @@ public class BookingController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+	@GetMapping("bookings/{id}")
+	public ResponseEntity<ResponseMessage<Booking>> getBookingDetailsById(@PathVariable Long id) {
+		ResponseMessage<Booking> rm = new ResponseMessage<>();
+
+		try {
+			Booking booking = bookingDao.getBookingDetailsById(id);
+			if (booking != null) {
+				rm.setMessage("Booking deatils are available");
+				rm.setResults(booking);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Record not found");
+				rm.setResults(booking);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 	
 	@GetMapping("bookings")
 	public ResponseEntity<ResponseMessage<List<Booking>>> getBookings() {

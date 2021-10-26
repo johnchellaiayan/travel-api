@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ta.entity.Booking;
+import com.ta.entity.Driver;
 import com.ta.entity.model.BookingModel;
 import com.ta.repository.BookingRepository;
 
@@ -86,4 +87,15 @@ public class BookingDao {
 		return null;
 	}
 
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public Booking getBookingDetailsById(Long id) {
+		Session session = em.unwrap(Session.class);
+		Criteria cr = session.createCriteria(Booking.class);
+		cr.add(Restrictions.eq("id", id));
+		List<Booking> list = (List<Booking>) cr.list();
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
 }

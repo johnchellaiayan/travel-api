@@ -33,7 +33,6 @@ import com.ta.entity.model.DriverModel;
 import com.ta.repository.DriverRepository;
 
 @Repository
-@Transactional
 public class DriverDao {
 
 	@Autowired
@@ -51,10 +50,12 @@ public class DriverDao {
 		return driver;
 	}
 
+	@Transactional
 	public Driver updateDriver(DriverModel driverModel, Long id) {
 		driverModel.setId(id);
 		Driver driver = modelMapper.map(driverModel, Driver.class);
-		driverRepository.save(driver);
+		Session session = em.unwrap(Session.class);
+		session.update(driver);
 		return driver;
 	}
 
@@ -62,6 +63,7 @@ public class DriverDao {
 		return driverRepository.findAll();
 	}
 
+	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Driver> getDriverDetail(Long id) {
 		Session session = em.unwrap(Session.class);
@@ -74,6 +76,7 @@ public class DriverDao {
 		return null;
 	}
 
+	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Driver> searchDriverInfo(String inFindField, String inFindValue) {
 		Session session = em.unwrap(Session.class);
@@ -86,6 +89,7 @@ public class DriverDao {
 		return null;
 	}
 	
+	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Driver> getActiveDrivers() {
 		Session session = em.unwrap(Session.class);
