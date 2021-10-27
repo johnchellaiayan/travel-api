@@ -149,12 +149,12 @@ public class DriverController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 	
-	@GetMapping("activedrivers")
-	public ResponseEntity<ResponseMessage<List<Driver>>> getActiveDrivers() {
+	@GetMapping("search/activedrivers/{value}")
+	public ResponseEntity<ResponseMessage<List<Driver>>> getActiveDrivers(@PathVariable String value) {
 		ResponseMessage<List<Driver>> rm = new ResponseMessage<>();
 
 		try {
-			List<Driver> drivers = driverDao.getActiveDrivers();
+			List<Driver> drivers = driverDao.getActiveDrivers(value);
 			if (drivers != null) {
 				rm.setMessage("Active Drivers are available");
 				rm.setResults(drivers);

@@ -18,9 +18,13 @@ package com.ta.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -76,13 +80,21 @@ public class CustomerDao {
 		return null;
 	}
 	@Transactional
-	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<Customer> searchCustomerInfo(String inFindField, String inFindValue) {
+	@SuppressWarnings({ "deprecation" })
+	public List<Customer> searchCustomerInfo(String inFindValue) {
 		Session session = em.unwrap(Session.class);
-		Criteria cr = session.createCriteria(Customer.class);
-		cr.add(Restrictions.ilike(inFindField, "%" + inFindValue + "%", MatchMode.ANYWHERE));
-		/// or condition
-		List<Customer> list = (List<Customer>) cr.list();
+		 CriteriaBuilder crBuilder = session.getCriteriaBuilder();
+		 CriteriaQuery<Customer> crq = crBuilder.createQuery(Customer.class);
+		 Root<Customer> root = crq.from(Customer.class);
+		 crq.select(root).where(crBuilder.or(
+				 crBuilder.like(root.<String>get("name"), ""+inFindValue+"%"),
+				 crBuilder.like(root.get("mobileNo1"), ""+inFindValue+"%"),
+				 crBuilder.like(root.<String>get("area"), ""+inFindValue+"%"),
+				 crBuilder.like(root.<String>get("mobileNo2"), ""+inFindValue+"%")
+				 )).orderBy(crBuilder.asc(root.get("name")));
+		 
+		 Query<Customer> q = session.createQuery(crq);
+		 List<Customer> list = q.getResultList();
 		if (list != null && list.size() > 0) {
 			return list;
 		}

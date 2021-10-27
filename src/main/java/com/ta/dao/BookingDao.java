@@ -29,12 +29,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ta.entity.Booking;
-import com.ta.entity.Driver;
 import com.ta.entity.model.BookingModel;
 import com.ta.repository.BookingRepository;
 
 @Repository
-@Transactional
 public class BookingDao {
 
 	@Autowired
@@ -52,17 +50,20 @@ public class BookingDao {
 		return booking;
 	}
 
+	@Transactional
 	public Booking updateBooking(BookingModel bookingModel, Long id) {
+		Session session = em.unwrap(Session.class);
 		bookingModel.setId(id);
 		Booking booking = modelMapper.map(bookingModel, Booking.class);
-		bookingRepository.save(booking);
+		session.update(booking);
 		return booking;
 	}
 
 	public List<Booking> getAllBookings() {
 		return bookingRepository.findAll();
 	}
-	
+
+	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Booking> getDatebasedBookings(String inFindValue) {
 		Session session = em.unwrap(Session.class);
@@ -74,7 +75,8 @@ public class BookingDao {
 		}
 		return null;
 	}
-	
+
+	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Booking> searchBookingInfo(String inFindField, String inFindValue) {
 		Session session = em.unwrap(Session.class);
@@ -87,6 +89,7 @@ public class BookingDao {
 		return null;
 	}
 
+	@Transactional
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public Booking getBookingDetailsById(Long id) {
 		Session session = em.unwrap(Session.class);

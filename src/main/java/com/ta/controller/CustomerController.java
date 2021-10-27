@@ -130,13 +130,13 @@ public class CustomerController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
-	@GetMapping("search/{field}/{value}")
-	public ResponseEntity<ResponseMessage<List<Customer>>> searchCustomerDetail(@PathVariable String field,
+	@GetMapping("search/{value}")
+	public ResponseEntity<ResponseMessage<List<Customer>>> searchCustomerDetail(
 			@PathVariable String value) {
 		ResponseMessage<List<Customer>> rm = new ResponseMessage<>();
 
 		try {
-			List<Customer> customers = customerDao.searchCustomerInfo(field, value);
+			List<Customer> customers = customerDao.searchCustomerInfo(value);
 			if (customers != null) {
 				rm.setMessage("Customers are available");
 				rm.setResults(customers);

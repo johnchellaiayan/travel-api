@@ -91,10 +91,11 @@ public class DriverDao {
 	
 	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<Driver> getActiveDrivers() {
+	public List<Driver> getActiveDrivers(String value) {
 		Session session = em.unwrap(Session.class);
 		Criteria cr = session.createCriteria(Driver.class);
-		cr.add(Restrictions.eqOrIsNull("isResigned", "false"));
+		cr.add(Restrictions.ilike("name", "%" + value + "%", MatchMode.ANYWHERE));
+		cr.add(Restrictions.eqOrIsNull("isResigned", "true"));
 		List<Driver> list = (List<Driver>) cr.list();
 		if (list != null && list.size() > 0) {
 			return list;

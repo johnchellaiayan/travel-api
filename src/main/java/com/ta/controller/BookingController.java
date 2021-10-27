@@ -52,7 +52,7 @@ public class BookingController {
 	}
 	
 	@CrossOrigin
-	@PutMapping("bookings/{id}")
+	@PutMapping("bookings/update/{id}")
 	public ResponseEntity<ResponseMessage<Booking>> updateBooking(@RequestBody BookingModel bookingModel,
 			@PathVariable Long id) {
 		ResponseMessage<Booking> rm = new ResponseMessage<>();
@@ -127,7 +127,7 @@ public class BookingController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 	
-	@GetMapping("bookings/{datefield}")
+	@GetMapping("bookings/search/{datefield}")
 	public ResponseEntity<ResponseMessage<List<Booking>>> getBookings(@PathVariable String datefield) {
 		ResponseMessage<List<Booking>> rm = new ResponseMessage<>();
 
