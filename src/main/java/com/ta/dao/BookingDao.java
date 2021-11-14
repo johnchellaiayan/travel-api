@@ -69,6 +69,7 @@ public class BookingDao {
 		Session session = em.unwrap(Session.class);
 		Criteria cr = session.createCriteria(Booking.class);
 		cr.add(Restrictions.ilike("reportDate", inFindValue + "%", MatchMode.START));
+		cr.add(Restrictions.ne("bookStatus", "Completed"));
 		List<Booking> list = (List<Booking>) cr.list();
 		if (list != null && list.size() > 0) {
 			return list;
@@ -101,4 +102,14 @@ public class BookingDao {
 		}
 		return null;
 	}
+	
+	@Transactional
+	public List<Booking> getActiveBookings() {
+		Session session = em.unwrap(Session.class);
+		String status="Completed";
+		List<Booking> bookings = session.createNativeQuery("SELECT * FROM Booking WHERE STR_TO_DATE(report_date, '%m/%d/%Y') >= CURDATE() AND book_status not like'%"+status+"%'", Booking.class)
+		.list();
+      return bookings;
+
+}
 }

@@ -29,6 +29,9 @@ public class Booking extends UserDateAudit {
 	private String bookingno;
 	
 	@Column(length = 150)
+	private String loggedby;	
+	
+	@Column(length = 150)
 	private String bookedby;
 
 	@Column(length = 150)

@@ -15,25 +15,20 @@
  ******************************************************************************/
 package com.ta.dao;
 
-import java.util.Optional;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.ta.dto.ErrorLogDto;
 import com.ta.entity.User;
 import com.ta.entity.model.UserModel;
-import com.ta.enumeration.LogOperation;
-import com.ta.exception.ForbiddenException;
 import com.ta.repository.UserRepository;
-import com.ta.util.LogWrapper;
 
 @Repository
 @Transactional
@@ -56,6 +51,10 @@ public class UserDao {
 			user.setPassword(encoder.encode(password));
 		userRepository.save(user);
 		return user;
+	}
+
+	public List<User> getUsers() {
+		return userRepository.findAll();	
 	}
 
 }

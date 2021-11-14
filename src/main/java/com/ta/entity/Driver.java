@@ -55,4 +55,7 @@ public class Driver extends UserDateAudit {
 	
 	@Column(length = 30)
 	private String isResigned;
+	
+	@Column(length = 30)
+    private String identifierNo;	
 }

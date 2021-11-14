@@ -13,5 +13,8 @@ public class StatisticsDto {
 	private BigInteger totalUsers;
 	
 	private BigInteger totalCurrentBookings;
+	
+	private BigInteger expiredLiscenseDrivers;
+
 
 }

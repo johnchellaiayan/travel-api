@@ -90,7 +90,9 @@ public class CustomerDao {
 				 crBuilder.like(root.<String>get("name"), ""+inFindValue+"%"),
 				 crBuilder.like(root.get("mobileNo1"), ""+inFindValue+"%"),
 				 crBuilder.like(root.<String>get("area"), ""+inFindValue+"%"),
-				 crBuilder.like(root.<String>get("mobileNo2"), ""+inFindValue+"%")
+				 crBuilder.like(root.<String>get("mobileNo2"), ""+inFindValue+"%"),
+				 crBuilder.like(root.<String>get("phoneNo1"), ""+inFindValue+"%"),
+				 crBuilder.like(root.<String>get("phoneNo2"), ""+inFindValue+"%")
 				 )).orderBy(crBuilder.asc(root.get("name")));
 		 
 		 Query<Customer> q = session.createQuery(crq);

@@ -15,10 +15,8 @@
  ******************************************************************************/
 package com.ta.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +25,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ta.dao.UserDao;
 import com.ta.dto.ErrorLogDto;
 import com.ta.dto.ResponseMessage;
-import com.ta.entity.Role;
 import com.ta.entity.User;
 import com.ta.entity.model.UserModel;
 import com.ta.enumeration.LogOperation;
@@ -50,6 +46,7 @@ public class UserController {
 	@Autowired
 	private UserDao userDao;
 
+	@SuppressWarnings({ "unused", "rawtypes" })
 	@Autowired
 	private PaginationUtils pageUtil;
 
@@ -76,4 +73,29 @@ public class UserController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+	@GetMapping("users")
+	public ResponseEntity<ResponseMessage<List<User>>> getUsers() {
+		ResponseMessage<List<User>> rm = new ResponseMessage<>();
+
+		try {
+			List<User> users = userDao.getUsers();
+			if (users != null) {
+				rm.setMessage("Users are available");
+				rm.setResults(users);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Users are not available.");
+				rm.setResults(users);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
+
 }

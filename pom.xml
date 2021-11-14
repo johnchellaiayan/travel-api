@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tw</name>
 	<description>Demo project for Spring Boot</description>
- 
+
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -91,7 +91,6 @@
 			<artifactId>nimbus-jose-jwt</artifactId>
 			<version>5.8</version>
 		</dependency>
-
 
 
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -183,8 +182,16 @@
 			<artifactId>commons-net</artifactId>
 			<version>3.3</version>
 		</dependency>
-
-
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
 		<!-- commons-dbcp for ConnectionFactory to connect database -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
