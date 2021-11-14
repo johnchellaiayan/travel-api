@@ -13,7 +13,9 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ta.dto.MessageDto;
 import com.ta.dto.StatisticsDto;
+import com.ta.entity.model.MessageModel;
 
 @SuppressWarnings("deprecation")
 @Repository
@@ -41,4 +43,13 @@ public class CommonDAO {
 		List<StatisticsDto> dto = (List<StatisticsDto>) q.list();
 		return dto.get(0);
 	}
+	
+	@Transactional
+	public MessageDto sedMessageTo(MessageModel messageModel) {
+		MessageDto mtdo = new MessageDto(); 
+		mtdo.setCustPhone(messageModel.getCustphone());
+		mtdo.setSmsto(messageModel.getSmsto());
+		return mtdo;
+	}
+
 }

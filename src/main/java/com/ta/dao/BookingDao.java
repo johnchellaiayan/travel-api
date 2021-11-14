@@ -50,9 +50,10 @@ public class BookingDao {
 		return booking;
 	}
 
-	@Transactional
+	
 	public Booking updateBooking(BookingModel bookingModel, Long id) {
 		Session session = em.unwrap(Session.class);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>" + id);
 		bookingModel.setId(id);
 		Booking booking = modelMapper.map(bookingModel, Booking.class);
 		session.update(booking);
