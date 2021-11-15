@@ -14,7 +14,6 @@ import com.ta.dao.CommonDAO;
 import com.ta.dto.MessageDto;
 import com.ta.dto.ResponseMessage;
 import com.ta.dto.StatisticsDto;
-import com.ta.entity.model.BookingModel;
 import com.ta.entity.model.MessageModel;
 
 @CrossOrigin(origins = "*") // this line

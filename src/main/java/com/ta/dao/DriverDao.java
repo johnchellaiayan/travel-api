@@ -15,12 +15,18 @@
  ******************************************************************************/
 package com.ta.dao;
 
+import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -28,6 +34,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ta.entity.Customer;
 import com.ta.entity.Driver;
 import com.ta.entity.model.DriverModel;
 import com.ta.repository.DriverRepository;
@@ -58,9 +65,18 @@ public class DriverDao {
 		session.update(driver);
 		return driver;
 	}
-
-	public List<Driver> getAllDrivers() {
-		return driverRepository.findAll();
+	
+	@SuppressWarnings("deprecation")
+	@Transactional
+	public List<Driver> getAllDrivers(int limit,int offset) {
+		Session session = em.unwrap(Session.class);
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Driver> criteriaQuery = builder.createQuery(Driver.class);
+		Root<Driver> root = criteriaQuery.from(Driver.class);
+		criteriaQuery.select(root);
+		Query<Driver> query = session.createQuery(criteriaQuery);
+		List<Driver> drivers = query.setFirstResult(offset).setMaxResults(limit).getResultList();
+		return drivers;
 	}
 
 	@Transactional
@@ -102,5 +118,20 @@ public class DriverDao {
 		}
 		return null;
 	}
-
+	
+	@Transactional
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Driver> getLiscenseExpiredDrivers() {
+		Session session = em.unwrap(Session.class);
+		Date currentDate = new Date();
+		Date thirtyDaysFromCurrentDate = new Date(currentDate.getTime() + Duration.ofDays(30).toMillis());
+		Criteria cr = session.createCriteria(Driver.class).add(Restrictions.disjunction().
+		add(Restrictions.le("licenseExpiryDate", thirtyDaysFromCurrentDate)).
+		add(Restrictions.le("licenseExpiryDate", new Date())));
+		List<Driver> list = (List<Driver>) cr.list();
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
+	}
 }

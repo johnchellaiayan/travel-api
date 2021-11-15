@@ -80,12 +80,12 @@ public class CustomerController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
-	@GetMapping("customers")
-	public ResponseEntity<ResponseMessage<List<Customer>>> getCustomers() {
+	@GetMapping("customers/{limit}/{offset}")
+	public ResponseEntity<ResponseMessage<List<Customer>>> getCustomers(@PathVariable int limit,@PathVariable int offset) {
 		ResponseMessage<List<Customer>> rm = new ResponseMessage<>();
 
 		try {
-			List<Customer> customers = customerDao.getAllCustomers();
+			List<Customer> customers = customerDao.getAllCustomers(limit,offset);
 			if (customers != null) {
 				rm.setMessage("Customers are available");
 				rm.setResults(customers);

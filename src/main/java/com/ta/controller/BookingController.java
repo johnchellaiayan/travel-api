@@ -128,11 +128,11 @@ public class BookingController {
 	}
 	
 	@GetMapping("bookings/search/{datefield}")
-	public ResponseEntity<ResponseMessage<List<Booking>>> getBookings(@PathVariable String datefield) {
-		ResponseMessage<List<Booking>> rm = new ResponseMessage<>();
+	public ResponseEntity<ResponseMessage<List<BookingModel>>> getBookings(@PathVariable String datefield) {
+		ResponseMessage<List<BookingModel>> rm = new ResponseMessage<>();
 
 		try {
-			List<Booking> bookings = bookingDao.getDatebasedBookings(datefield);
+			List<BookingModel> bookings = bookingDao.getDatebasedBookings(datefield);
 			if (bookings != null) {
 				rm.setMessage("Bookings are available");
 				rm.setResults(bookings);
@@ -153,12 +153,12 @@ public class BookingController {
 	}
 
 	@GetMapping("search/{field}/{value}")
-	public ResponseEntity<ResponseMessage<List<Booking>>> searchBookingDetail(@PathVariable String field, 
+	public ResponseEntity<ResponseMessage<List<BookingModel>>> searchBookingDetail(@PathVariable String field, 
 			@PathVariable String value) {
-		ResponseMessage<List<Booking>> rm = new ResponseMessage<>();
+		ResponseMessage<List<BookingModel>> rm = new ResponseMessage<>();
 
 		try {
-			List<Booking> bookings = bookingDao.searchBookingInfo(field, value);
+			List<BookingModel> bookings = bookingDao.searchBookingInfo(field, value);
 			if (bookings != null) {
 				rm.setMessage("Bookings are available");
 				rm.setResults(bookings);
@@ -174,12 +174,12 @@ public class BookingController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 	
-	@GetMapping("getActiveBookings")
-	public ResponseEntity<ResponseMessage<List<Booking>>> getActiveBookings() {
-		ResponseMessage<List<Booking>> rm = new ResponseMessage<>();
+	@GetMapping("getActiveBookings/{limit}/{offset}")
+	public ResponseEntity<ResponseMessage<List<BookingModel>>> getActiveBookings(@PathVariable int limit,@PathVariable int offset) {
+		ResponseMessage<List<BookingModel>> rm = new ResponseMessage<>();
 
 		try {
-			List<Booking> bookings = bookingDao.getActiveBookings();
+			List<BookingModel> bookings = bookingDao.getActiveBookings(limit,offset);
 			if (bookings != null) {
 				rm.setMessage("Bookings are available");
 				rm.setResults(bookings);

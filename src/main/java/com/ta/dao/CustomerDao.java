@@ -26,13 +26,11 @@ import javax.transaction.Transactional;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ta.entity.Customer;
 import com.ta.entity.Customer;
 import com.ta.entity.model.CustomerModel;
 import com.ta.repository.CustomerRepository;
@@ -64,9 +62,19 @@ public class CustomerDao {
 		return customer;
 	}
 
-	public List<Customer> getAllCustomers() {
-		return customerRepository.findAll();
+	@SuppressWarnings("deprecation")
+	@Transactional
+	public List<Customer> getAllCustomers(int limit, int offset) {
+		Session session = em.unwrap(Session.class);
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Customer> criteriaQuery = builder.createQuery(Customer.class);
+		Root<Customer> root = criteriaQuery.from(Customer.class);
+		criteriaQuery.select(root);
+		Query<Customer> query = session.createQuery(criteriaQuery);
+		List<Customer> customers = query.setFirstResult(offset).setMaxResults(limit).getResultList();
+		return customers;
 	}
+
 	@Transactional
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public List<Customer> getCustomerDetail(Long id) {
@@ -79,24 +87,25 @@ public class CustomerDao {
 		}
 		return null;
 	}
+
 	@Transactional
 	@SuppressWarnings({ "deprecation" })
 	public List<Customer> searchCustomerInfo(String inFindValue) {
 		Session session = em.unwrap(Session.class);
-		 CriteriaBuilder crBuilder = session.getCriteriaBuilder();
-		 CriteriaQuery<Customer> crq = crBuilder.createQuery(Customer.class);
-		 Root<Customer> root = crq.from(Customer.class);
-		 crq.select(root).where(crBuilder.or(
-				 crBuilder.like(root.<String>get("name"), ""+inFindValue+"%"),
-				 crBuilder.like(root.get("mobileNo1"), ""+inFindValue+"%"),
-				 crBuilder.like(root.<String>get("area"), ""+inFindValue+"%"),
-				 crBuilder.like(root.<String>get("mobileNo2"), ""+inFindValue+"%"),
-				 crBuilder.like(root.<String>get("phoneNo1"), ""+inFindValue+"%"),
-				 crBuilder.like(root.<String>get("phoneNo2"), ""+inFindValue+"%")
-				 )).orderBy(crBuilder.asc(root.get("name")));
-		 
-		 Query<Customer> q = session.createQuery(crq);
-		 List<Customer> list = q.getResultList();
+		CriteriaBuilder crBuilder = session.getCriteriaBuilder();
+		CriteriaQuery<Customer> crq = crBuilder.createQuery(Customer.class);
+		Root<Customer> root = crq.from(Customer.class);
+		crq.select(root)
+				.where(crBuilder.or(crBuilder.like(root.<String>get("name"), "" + inFindValue + "%"),
+						crBuilder.like(root.get("mobileNo1"), "" + inFindValue + "%"),
+						crBuilder.like(root.<String>get("area"), "" + inFindValue + "%"),
+						crBuilder.like(root.<String>get("mobileNo2"), "" + inFindValue + "%"),
+						crBuilder.like(root.<String>get("phoneNo1"), "" + inFindValue + "%"),
+						crBuilder.like(root.<String>get("phoneNo2"), "" + inFindValue + "%")))
+				.orderBy(crBuilder.asc(root.get("name")));
+
+		Query<Customer> q = session.createQuery(crq);
+		List<Customer> list = q.getResultList();
 		if (list != null && list.size() > 0) {
 			return list;
 		}

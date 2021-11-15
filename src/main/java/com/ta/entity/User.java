@@ -35,9 +35,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ta.entity.audit.UserDateAudit;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @DynamicUpdate
 public class User extends UserDateAudit {
 

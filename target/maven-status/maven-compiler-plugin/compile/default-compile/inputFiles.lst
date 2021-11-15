@@ -44,6 +44,7 @@ D:\TA_API\travel-api\src\main\java\com\ta\firebase\FirebaseUtil.java
 D:\TA_API\travel-api\src\main\java\com\ta\exception\ErrorResponse.java
 D:\TA_API\travel-api\src\main\java\com\ta\entity\model\DriverModel.java
 D:\TA_API\travel-api\src\main\java\com\ta\controller\ErrorController.java
+D:\TA_API\travel-api\src\main\java\com\ta\entity\model\MessageModel.java
 D:\TA_API\travel-api\src\main\java\com\ta\config\JwtCustomHeadersAccessTokenConverter.java
 D:\TA_API\travel-api\src\main\java\com\ta\exception\CustomErrorResponse.java
 D:\TA_API\travel-api\src\main\java\com\ta\exception\ControllerErrorHandler.java
@@ -64,6 +65,7 @@ D:\TA_API\travel-api\src\main\java\com\ta\dto\BasicDto.java
 D:\TA_API\travel-api\src\main\java\com\ta\firebase\FirebaseResponse.java
 D:\TA_API\travel-api\src\main\java\com\ta\exception\ForbiddenException.java
 D:\TA_API\travel-api\src\main\java\com\ta\dao\DriverDao.java
+D:\TA_API\travel-api\src\main\java\com\ta\dto\MessageDto.java
 D:\TA_API\travel-api\src\main\java\com\ta\dto\JwtTokenDto.java
 D:\TA_API\travel-api\src\main\java\com\ta\dto\AuditLogDto.java
 D:\TA_API\travel-api\src\main\java\com\ta\repository\ResourceRepository.java

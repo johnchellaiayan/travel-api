@@ -78,12 +78,12 @@ public class DriverController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 	
-	@GetMapping("drivers")
-	public ResponseEntity<ResponseMessage<List<Driver>>> getDrivers() {
+	@GetMapping("drivers/{limit}/{offset}")
+	public ResponseEntity<ResponseMessage<List<Driver>>> getDrivers(@PathVariable int limit,@PathVariable int offset) {
 		ResponseMessage<List<Driver>> rm = new ResponseMessage<>();
 
 		try {
-			List<Driver> drivers = driverDao.getAllDrivers();
+			List<Driver> drivers = driverDao.getAllDrivers(limit,offset);
 			if (drivers != null) {
 				rm.setMessage("Drivers are available");
 				rm.setResults(drivers);
@@ -165,6 +165,31 @@ public class DriverController {
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
+	
+	@GetMapping("getLiscenseExpiredDrivers")
+	public ResponseEntity<ResponseMessage<List<Driver>>> getLiscenseExpiredDrivers() {
+		ResponseMessage<List<Driver>> rm = new ResponseMessage<>();
+
+		try {
+			List<Driver> drivers = driverDao.getLiscenseExpiredDrivers();
+			if (drivers != null) {
+				rm.setMessage("Drivers are available");
+				rm.setResults(drivers);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Drivers are not available.");
+				rm.setResults(drivers);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
 			throw e;
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);

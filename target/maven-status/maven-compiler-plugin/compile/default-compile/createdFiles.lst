@@ -10,6 +10,7 @@ com\ta\dao\CustomerDao.class
 com\ta\entity\Driver.class
 com\ta\util\PhysicalNamingStrategyImpl.class
 com\ta\dao\DriverDao.class
+com\ta\entity\model\MessageModel.class
 com\ta\entity\model\UserModel.class
 com\ta\dto\PaginationDto.class
 com\ta\filter\JwtAuthenticationEntryPoint.class
@@ -38,6 +39,7 @@ com\ta\dto\ApiKeyDto.class
 com\ta\dto\TokenDto.class
 com\ta\util\AES.class
 com\ta\dto\AuditLogDto.class
+com\ta\dto\MessageDto.class
 com\ta\repository\BookingRepository.class
 com\ta\dto\StatisticsDto.class
 com\ta\dto\BasicLookupDto.class

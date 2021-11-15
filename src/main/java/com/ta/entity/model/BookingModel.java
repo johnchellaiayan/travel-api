@@ -1,7 +1,5 @@
 package com.ta.entity.model;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -25,4 +23,6 @@ public class BookingModel {
 	private String smsTo;
 	private String customerRequest;
 	private String bookStatus;
+	private String loggedby;
+	private boolean isDriverAssigningdTimeExceeded;
 }

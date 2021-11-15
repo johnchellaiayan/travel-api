@@ -15,6 +15,10 @@
  ******************************************************************************/
 package com.ta.dao;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -50,13 +54,11 @@ public class BookingDao {
 		return booking;
 	}
 
-	
+	@Transactional
 	public Booking updateBooking(BookingModel bookingModel, Long id) {
-		Session session = em.unwrap(Session.class);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>" + id);
 		bookingModel.setId(id);
 		Booking booking = modelMapper.map(bookingModel, Booking.class);
-		session.update(booking);
+		bookingRepository.save(booking);
 		return booking;
 	}
 
@@ -66,27 +68,58 @@ public class BookingDao {
 
 	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<Booking> getDatebasedBookings(String inFindValue) {
+	public List<BookingModel> getDatebasedBookings(String inFindValue) {
+		List<BookingModel> bookingModels = new ArrayList<>();
+		LocalDateTime currDateTime = LocalDateTime.now().minusHours(2);
+		LocalDate localDate = currDateTime.toLocalDate();
 		Session session = em.unwrap(Session.class);
 		Criteria cr = session.createCriteria(Booking.class);
 		cr.add(Restrictions.ilike("reportDate", inFindValue + "%", MatchMode.START));
 		cr.add(Restrictions.ne("bookStatus", "Completed"));
 		List<Booking> list = (List<Booking>) cr.list();
 		if (list != null && list.size() > 0) {
-			return list;
+			list.forEach(l -> {
+				BookingModel bookingModel = new BookingModel();
+				bookingModel = modelMapper.map(l, BookingModel.class);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				LocalDateTime dateTime = LocalDateTime.parse(l.getReportDate(), formatter);
+				LocalDate reportDate = dateTime.toLocalDate();
+				if ((dateTime.isAfter(currDateTime) || dateTime.isBefore(currDateTime)) && localDate.equals(reportDate)
+						&& (l.getDriverName() == null || l.getDriverName().isEmpty())) {
+					bookingModel.setDriverAssigningdTimeExceeded(true);
+				}
+				bookingModels.add(bookingModel);
+			});
+			return bookingModels;
+
 		}
 		return null;
 	}
 
 	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<Booking> searchBookingInfo(String inFindField, String inFindValue) {
+	public List<BookingModel> searchBookingInfo(String inFindField, String inFindValue) {
+		List<BookingModel> bookingModels = new ArrayList<>();
+		LocalDateTime currDateTime = LocalDateTime.now().minusHours(2);
+		LocalDate localDate = currDateTime.toLocalDate();
 		Session session = em.unwrap(Session.class);
 		Criteria cr = session.createCriteria(Booking.class);
 		cr.add(Restrictions.ilike(inFindField, "%" + inFindValue + "%", MatchMode.ANYWHERE));
 		List<Booking> list = (List<Booking>) cr.list();
 		if (list != null && list.size() > 0) {
-			return list;
+			list.forEach(l -> {
+				BookingModel bookingModel = new BookingModel();
+				bookingModel = modelMapper.map(l, BookingModel.class);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				LocalDateTime dateTime = LocalDateTime.parse(l.getReportDate(), formatter);
+				LocalDate reportDate = dateTime.toLocalDate();
+				if ((dateTime.isAfter(currDateTime) || dateTime.isBefore(currDateTime)) && localDate.equals(reportDate)
+						&& (l.getDriverName() == null || l.getDriverName().isEmpty())) {
+					bookingModel.setDriverAssigningdTimeExceeded(true);
+				}
+				bookingModels.add(bookingModel);
+			});
+			return bookingModels;
 		}
 		return null;
 	}
@@ -103,14 +136,31 @@ public class BookingDao {
 		}
 		return null;
 	}
-	
-	@Transactional
-	public List<Booking> getActiveBookings() {
-		Session session = em.unwrap(Session.class);
-		String status="Completed";
-		List<Booking> bookings = session.createNativeQuery("SELECT * FROM Booking WHERE STR_TO_DATE(report_date, '%m/%d/%Y') >= CURDATE() AND book_status not like'%"+status+"%'", Booking.class)
-		.list();
-      return bookings;
 
-}
+	@Transactional
+	public List<BookingModel> getActiveBookings(int limit, int offset) {
+		List<BookingModel> bookingModels = new ArrayList<>();
+		LocalDateTime currDateTime = LocalDateTime.now().minusHours(2);
+		LocalDate localDate = currDateTime.toLocalDate();
+		Session session = em.unwrap(Session.class);
+		String status = "Completed";
+		List<Booking> bookings = session.createNativeQuery(
+				"SELECT * FROM Booking WHERE DATE(report_date) >= CURDATE() AND book_status not like'%" + status
+						+ "%' order by DATE(report_date) ASC",
+				Booking.class).setFirstResult(offset).setMaxResults(limit).list();
+		bookings.forEach(l -> {
+			BookingModel bookingModel = new BookingModel();
+			bookingModel = modelMapper.map(l, BookingModel.class);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			LocalDateTime dateTime = LocalDateTime.parse(l.getReportDate(), formatter);
+			LocalDate reportDate = dateTime.toLocalDate();
+			if ((dateTime.isAfter(currDateTime) || dateTime.isBefore(currDateTime)) && localDate.equals(reportDate)
+					&& (l.getDriverName() == null || l.getDriverName().isEmpty())) {
+				bookingModel.setDriverAssigningdTimeExceeded(true);
+			}
+			bookingModels.add(bookingModel);
+		});
+		return bookingModels;
+
+	}
 }

@@ -21,4 +21,5 @@ public class DriverModel {
 	private Date licenseExpiryDate;
 	private String complaints;
 	private String isResigned;
+	private String identifierNo;
 }

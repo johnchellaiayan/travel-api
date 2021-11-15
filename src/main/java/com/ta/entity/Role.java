@@ -12,8 +12,11 @@ import javax.persistence.ManyToMany;
 import com.ta.entity.audit.UserDateAudit;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Role extends UserDateAudit {
 	@Id
