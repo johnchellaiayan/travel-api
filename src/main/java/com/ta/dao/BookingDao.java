@@ -145,7 +145,7 @@ public class BookingDao {
 		Session session = em.unwrap(Session.class);
 		String status = "Completed";
 		List<Booking> bookings = session.createNativeQuery(
-				"SELECT * FROM Booking WHERE DATE(report_date) >= CURDATE() AND book_status not like'%" + status
+				"SELECT * FROM booking WHERE DATE(report_date) >= CURDATE() AND book_status not like'%" + status
 						+ "%' order by DATE(report_date) ASC",
 				Booking.class).setFirstResult(offset).setMaxResults(limit).list();
 		bookings.forEach(l -> {
