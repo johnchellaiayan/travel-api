@@ -15,26 +15,29 @@
  ******************************************************************************/
 package com.ta.dao;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-
+import com.ta.entity.Booking;
+import com.ta.entity.model.BookingModel;
+import com.ta.repository.BookingRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.ta.entity.Booking;
-import com.ta.entity.model.BookingModel;
-import com.ta.repository.BookingRepository;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BookingDao {
@@ -64,6 +67,26 @@ public class BookingDao {
 
 	public List<Booking> getAllBookings() {
 		return bookingRepository.findAll();
+	}
+
+	@SuppressWarnings("deprecation")
+	@Transactional
+	public Map<String, Object> getAllBookingsPage(String bookingname, int page, int size) {
+
+		Pageable paging = PageRequest.of(page, size);
+		Page<Booking> pageTuts;
+		if (bookingname == null)
+			pageTuts = bookingRepository.findAll(paging);
+		else
+			pageTuts = bookingRepository.findByBookingnoContaining(bookingname, paging);
+		List<Booking>  bookings = pageTuts.getContent();
+		Map<String, Object> response = new HashMap<>();
+		response.put("bookings", bookings);
+		response.put("currentPage", pageTuts.getNumber());
+		response.put("totalItems", pageTuts.getTotalElements());
+		response.put("totalPages", pageTuts.getTotalPages());
+
+		return response;
 	}
 
 	@Transactional
