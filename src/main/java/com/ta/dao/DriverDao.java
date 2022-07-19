@@ -17,7 +17,9 @@ package com.ta.dao;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -32,6 +34,9 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.ta.entity.Customer;
@@ -78,6 +83,27 @@ public class DriverDao {
 		List<Driver> drivers = query.setFirstResult(offset).setMaxResults(limit).getResultList();
 		return drivers;
 	}
+
+	@SuppressWarnings("deprecation")
+	@Transactional
+	public Map<String, Object> getAllDriversPage(String drivername, int page, int size) {
+
+		Pageable paging = PageRequest.of(page, size);
+		Page<Driver> pageTuts;
+		if (drivername == null)
+			pageTuts = driverRepository.findAll(paging);
+		else
+			pageTuts = driverRepository.findByNameContaining(drivername, paging);
+		List<Driver>  drivers = pageTuts.getContent();
+		Map<String, Object> response = new HashMap<>();
+		response.put("drivers", drivers);
+		response.put("currentPage", pageTuts.getNumber());
+		response.put("totalItems", pageTuts.getTotalElements());
+		response.put("totalPages", pageTuts.getTotalPages());
+
+		return response;
+	}
+
 
 	@Transactional
 	@SuppressWarnings({ "unchecked", "deprecation" })

@@ -17,6 +17,9 @@ package com.ta.repository;
 
 import javax.transaction.Transactional;
 
+import com.ta.entity.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +28,7 @@ import com.ta.entity.Driver;
 @Repository
 @Transactional
 public interface DriverRepository extends JpaRepository<Driver, String> {
+    Page<Driver> findByNameContaining(String name, Pageable pageable);
+    Page<Driver> findByAddressContaining(String address, Pageable pageable);
+    Page<Driver> findByAreaContaining(String area, Pageable pageable);
 }
