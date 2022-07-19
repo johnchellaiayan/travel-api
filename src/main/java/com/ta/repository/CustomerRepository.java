@@ -15,14 +15,13 @@
  ******************************************************************************/
 package com.ta.repository;
 
-import javax.transaction.Transactional;
-
+import com.ta.entity.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ta.entity.Customer;
+import javax.transaction.Transactional;
 
 @Repository
 @Transactional

@@ -1,17 +1,16 @@
 package com.ta.controller;
 
-import java.util.List;
-import java.util.Map;
-
+import com.ta.dao.CustomerDao;
+import com.ta.dto.ResponseMessage;
+import com.ta.entity.Customer;
+import com.ta.entity.model.CustomerModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ta.dao.CustomerDao;
-import com.ta.dto.ResponseMessage;
-import com.ta.entity.Customer;
-import com.ta.entity.model.CustomerModel;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*") // this line
 @RestController

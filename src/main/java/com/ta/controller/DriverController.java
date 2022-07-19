@@ -1,17 +1,16 @@
 package com.ta.controller;
 
-import java.util.List;
-import java.util.Map;
-
+import com.ta.dao.DriverDao;
+import com.ta.dto.ResponseMessage;
+import com.ta.entity.Driver;
+import com.ta.entity.model.DriverModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ta.dao.DriverDao;
-import com.ta.dto.ResponseMessage;
-import com.ta.entity.Driver;
-import com.ta.entity.model.DriverModel;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/driver/")
