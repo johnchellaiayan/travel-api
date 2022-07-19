@@ -15,7 +15,9 @@
  ******************************************************************************/
 package com.ta.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -29,6 +31,9 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.ta.entity.Customer;
@@ -60,6 +65,26 @@ public class CustomerDao {
 		Session session = em.unwrap(Session.class);
 		session.update(customer);
 		return customer;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Transactional
+	public Map<String, Object> getAllCustomersPage(String customername, int page, int size) {
+
+		Pageable paging = PageRequest.of(page, size);
+		Page<Customer> pageTuts;
+		if (customername == null)
+			pageTuts = customerRepository.findAll(paging);
+		else
+			pageTuts = customerRepository.findByNameContaining(customername, paging);
+		List<Customer>  customers = pageTuts.getContent();
+		Map<String, Object> response = new HashMap<>();
+		response.put("customers", customers);
+		response.put("currentPage", pageTuts.getNumber());
+		response.put("totalItems", pageTuts.getTotalElements());
+		response.put("totalPages", pageTuts.getTotalPages());
+
+		return response;
 	}
 
 	@SuppressWarnings("deprecation")

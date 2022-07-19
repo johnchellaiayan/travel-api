@@ -17,6 +17,8 @@ package com.ta.repository;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +27,7 @@ import com.ta.entity.Customer;
 @Repository
 @Transactional
 public interface CustomerRepository extends JpaRepository<Customer, String> {
+    Page<Customer> findByNameContaining(String name, Pageable pageable);
+    Page<Customer> findByAddressContaining(String address, Pageable pageable);
+    Page<Customer> findByAreaContaining(String area, Pageable pageable);
 }
