@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.ta.dao;
 
-import com.ta.entity.Customer;
 import com.ta.entity.User;
 import com.ta.entity.model.UserModel;
 import com.ta.repository.UserRepository;
@@ -31,7 +30,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.concurrent.Future;
 
 @Repository
 @Transactional

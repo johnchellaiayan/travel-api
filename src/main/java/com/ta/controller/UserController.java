@@ -15,14 +15,6 @@
  ******************************************************************************/
 package com.ta.controller;
 
-import java.util.List;
-
-import com.ta.entity.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import com.ta.dao.UserDao;
 import com.ta.dto.ErrorLogDto;
 import com.ta.dto.ResponseMessage;
@@ -31,8 +23,13 @@ import com.ta.entity.model.UserModel;
 import com.ta.enumeration.LogOperation;
 import com.ta.util.LogWrapper;
 import com.ta.util.PaginationUtils;
-
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
