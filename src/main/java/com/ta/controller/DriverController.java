@@ -213,4 +213,28 @@ public class DriverController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
+	@DeleteMapping
+	public ResponseEntity<ResponseMessage<Driver>> deleteDriver(@RequestBody DriverModel driverModel) {
+		ResponseMessage<Driver> rm = new ResponseMessage<>();
+
+		try {
+			Driver driver = driverDao.deleteDriver(driverModel);
+			if (driver != null) {
+				rm.setMessage("Driver Information Deleted successfully");
+				rm.setResults(driver);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Record not deleted");
+				rm.setResults(driver);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 }

@@ -169,5 +169,24 @@ public class CustomerController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+	@DeleteMapping("customers")
+	public ResponseEntity<ResponseMessage<Customer>> deleteCustomer(@RequestBody CustomerModel customerModel) {
+		ResponseMessage<Customer> rm = new ResponseMessage<>();
 
+		try {
+			Customer customer = customerDao.deleteCustomer(customerModel);
+			if (customer != null) {
+				rm.setMessage("Customer Information deleted successfully");
+				rm.setResults(customer);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Customer Record not deleted");
+				rm.setResults(customer);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 }

@@ -157,4 +157,10 @@ public class DriverDao {
 		}
 		return null;
 	}
+
+	public Driver deleteDriver(DriverModel driverModel) {
+		Driver driver = modelMapper.map(driverModel, Driver.class);
+		driverRepository.delete(driver);
+		return driver;
+	}
 }

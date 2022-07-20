@@ -17,15 +17,11 @@ package com.ta.controller;
 
 import java.util.List;
 
+import com.ta.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ta.dao.UserDao;
 import com.ta.dto.ErrorLogDto;
@@ -73,6 +69,7 @@ public class UserController {
 		}
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
+
 	@GetMapping("users")
 	public ResponseEntity<ResponseMessage<List<User>>> getUsers() {
 		ResponseMessage<List<User>> rm = new ResponseMessage<>();
@@ -98,4 +95,73 @@ public class UserController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
+	@PutMapping("update/{id}")
+	public ResponseEntity<ResponseMessage<User>> updateUser(@RequestBody UserModel userDto,
+																  @PathVariable Long id) {
+		ResponseMessage<User> rm = new ResponseMessage<>();
+
+		try {
+			User users = userDao.updateUser(userDto, id );
+			if (users != null) {
+				rm.setMessage("Users are available");
+				rm.setResults(users);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Users are not available.");
+				rm.setResults(users);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
+
+	@GetMapping("user/{id}")
+	public ResponseEntity<ResponseMessage<User>> getUserDetail(@PathVariable Long id) {
+		ResponseMessage<User> rm = new ResponseMessage<>();
+
+		try {
+			User users = userDao.getUserDetail(id).get(0);
+			if (users != null) {
+				rm.setMessage("User details are available");
+				rm.setResults(users);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("User details are not available.");
+				rm.setResults(users);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			/*
+			 * LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.
+			 * DELETE).errorMessage(e.getMessage()) .exception(e).build());
+			 */
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
+
+	@DeleteMapping
+	public ResponseEntity<ResponseMessage<User>> deleteUser(@RequestBody UserModel userDto) {
+		ResponseMessage<User> rm = new ResponseMessage<>();
+
+		try {
+			User user = userDao.deleteUser(userDto);
+			if (user != null) {
+				rm.setMessage("User details deleted successfully");
+				rm.setResults(user);
+				rm.setStatusCode(1);
+			} else {
+				rm.setMessage("Record not deleted");
+				rm.setResults(user);
+				rm.setStatusCode(0);
+			}
+		} catch (Exception e) {
+			LogWrapper.logErrorDetails(ErrorLogDto.builder().operation(LogOperation.DELETE).errorMessage(e.getMessage())
+					.exception(e).build());
+			throw e;
+		}
+		return new ResponseEntity<>(rm, HttpStatus.OK);
+	}
 }

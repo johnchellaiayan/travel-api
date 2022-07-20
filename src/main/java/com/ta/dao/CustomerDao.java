@@ -15,16 +15,9 @@
  ******************************************************************************/
 package com.ta.dao;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-
+import com.ta.entity.Customer;
+import com.ta.entity.model.CustomerModel;
+import com.ta.repository.CustomerRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -36,9 +29,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.ta.entity.Customer;
-import com.ta.entity.model.CustomerModel;
-import com.ta.repository.CustomerRepository;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class CustomerDao {
@@ -136,4 +134,12 @@ public class CustomerDao {
 		}
 		return null;
 	}
+
+	@Transactional
+	public Customer deleteCustomer(CustomerModel customerModel) {
+		Customer customer = modelMapper.map(customerModel, Customer.class);
+		customerRepository.delete(customer);
+		return customer;
+	}
+
 }
