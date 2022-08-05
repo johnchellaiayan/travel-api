@@ -1,18 +1,9 @@
 package com.ta.entity;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ta.entity.audit.UserDateAudit;
-
 import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -38,6 +29,12 @@ public class Booking extends UserDateAudit {
 
 	@Column(length = 150)
 	private String driverName;
+
+	@Column(length = 150)
+	private String customerID;
+
+	@Column(length = 150)
+	private String driverID;
 
 	@Column(length = 100)
 	private String reportDate;

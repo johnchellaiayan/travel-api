@@ -8,6 +8,8 @@ public class BookingModel {
 	private Long id;
 	private String bookedby;
 	private String bookingno;
+	private String customerID;
+	private String driverID;
 	private String driverName;
 	private String reportDate;
 	private String reportTime;

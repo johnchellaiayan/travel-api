@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>Travelagency-ui</artifactId>
+	<artifactId>Travelagency-api</artifactId>
 	<version>0.0.1</version>
 	<name>ta</name>
 	<description>Demo project for Spring Boot</description>
@@ -249,5 +249,5 @@
 		</plugins>
 	</build>
 
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 </project>
