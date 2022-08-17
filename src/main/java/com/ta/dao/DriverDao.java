@@ -163,4 +163,17 @@ public class DriverDao {
 		driverRepository.delete(driver);
 		return driver;
 	}
+
+/*	public FileDB store(MultipartFile file) throws IOException {
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		FileDB FileDB = new FileDB(fileName, file.getContentType(), file.getBytes());
+		return fileDBRepository.save(FileDB);
+	}
+	public FileDB getFile(String id) {
+		return fileDBRepository.findById(id).get();
+	}
+
+	public Stream<FileDB> getAllFiles() {
+		return fileDBRepository.findAll().stream();
+	}*/
 }

@@ -22,4 +22,8 @@ public class DriverModel {
 	private String complaints;
 	private String isResigned;
 	private String identifierNo;
+	private String bloodGroup;
+	private String aadharcard;
+	private String vaccination;
+	//private FileDB fileDB;
 }

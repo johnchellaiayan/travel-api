@@ -1,16 +1,10 @@
 package com.ta.entity;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import com.ta.entity.audit.UserDateAudit;
-
 import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -57,5 +51,18 @@ public class Driver extends UserDateAudit {
 	private String isResigned;
 	
 	@Column(length = 30)
-    private String identifierNo;	
+    private String identifierNo;
+
+	@Column(length = 30)
+	private String bloodGroup;
+
+	@Column(length = 30)
+	private String aadharcard;
+
+	@Column(length = 30)
+	private String vaccination;
+
+	/*@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id", referencedColumnName = "id")
+	private FileDB fileDB;*/
 }
